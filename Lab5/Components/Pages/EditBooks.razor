@@ -1,0 +1,65 @@
+﻿@page "/edit-book/{Id:int}"
+@using Lab5.Models
+@using Lab5.Services
+@inject ILibraryService LibraryService
+@inject NavigationManager Nav
+
+<title>Edit Book</title>
+
+<h3>Edit Book</h3>
+
+<div class="card p-4">
+    <div class="mb-3">
+        <label>Title</label>
+        <input @bind="editBook.Title" class="form-control"/>
+    </div>
+
+    <div class="mb-3">
+        <label>Author</label>
+        <input @bind="editBook.Author" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>ISBN</label>
+        <input @bind="editBook.ISBN" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <button class="btn btn-success" @onclick="Save">Save</button>
+    </div>
+</div>
+
+@code {
+    // book id parameter to receive id
+    [Parameter] public int Id { get; set; }
+
+    // hold user input until saved
+    public Book editBook;
+
+    protected override void OnInitialized()
+    {
+        // find the book thatr matches the ID
+        var book = LibraryServices.books.FirstOrDefault(b => b.Id == Id);
+
+        // if book is found, create a duplicate for updating
+        if (book != null)
+        {
+            editBook = new Book
+            {
+                Id = book.Id,
+                Title = book.Title,
+                Author = book.Author,
+                ISBN = book.ISBN
+            };
+        }
+    }
+
+    /// <summary>
+    /// Saves the edit
+    /// </summary>
+    void Save ()
+    {
+        LibraryService.EditBook(Id, editBook);
+        Nav.NavigateTo("/");
+    }
+}

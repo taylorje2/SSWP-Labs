@@ -1,6 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Lab5.Models;
 using Lab5.Services;
-using Lab5.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Net;
 using System.Reflection;
 
 namespace Lab6Tests
@@ -112,12 +113,12 @@ namespace Lab6Tests
         /// Test method for EditBook
         /// </summary>
         [DataTestMethod]
-        [DataRow("To Kill a Mockingbird", "Harper Lee", "123456-A")]
-        [DataRow("", "Harper Lee", "123456-A")]
-        [DataRow("To Kill a Mockingbird", "", "123456-A")]
-        [DataRow(null, null, "123456-A")]
+        [DataRow("New Book", "No Author", "ABC123")]
+        [DataRow("", "No Author", "ABC123")]
+        [DataRow("New Book", "", "ABC123")]
+        [DataRow(null, null, "ABC123")]
         [DataRow(null, null, null)]
-        public void TestEditBook(int bookId, string newTitle, string newAuthor, string newISBN)
+        public void TestEditBook(string newTitle, string newAuthor, string newISBN)
         {
             // Arrange
             // clear the book list for the test method
@@ -133,7 +134,7 @@ namespace Lab6Tests
             testBook.AddBook(existingBook);
 
             // update book set up
-            var updatedBook = new Book { Id = bookId, Title = newTitle, Author = newAuthor, ISBN = newISBN };
+            var updatedBook = new Book { Title = newTitle, Author = newAuthor, ISBN = newISBN };
 
             // Act
             // update the book that where ID = 1
@@ -153,14 +154,39 @@ namespace Lab6Tests
         /// <summary>
         /// Test method for EditUser
         /// </summary>
-        [TestMethod]
-        public void TestEditUser()
+        [DataTestMethod]
+        [DataRow("New User", "newEmail@email.com")] // happy
+        [DataRow("New User", null)]
+        [DataRow(null, "newEmail@email.com")]
+        [DataRow(null, null)]
+        public void TestEditUser(string newName, string newEmail)
         {
             // Arrange
+            // clear the user list for the test method
+            LibraryServices.users.Clear();
+
+            // new instance of LibraryServices
+            LibraryServices testUser = new LibraryServices();
+
+            // fake user to update
+            var existingUser = new User { Name = "John Smith", Email = "example@email.com" };
+
+            // add the fake user to the list
+            testUser.AddUser(existingUser);
+
+            // update user set up
+            var updatedUser= new User { Name = newName, Email = newEmail };
 
             // Act
+            // update the user that where ID = 1
+            testUser.EditUser(1, updatedUser);
 
             // Assert
+            // Assert that the new name was set
+            Assert.AreEqual(newName, LibraryServices.users[0].Name);
+
+            // Assert that the new author was set
+            Assert.AreEqual(newEmail, LibraryServices.users[0].Name);
         }
 
         /////////////////////////////////////////////////////////////

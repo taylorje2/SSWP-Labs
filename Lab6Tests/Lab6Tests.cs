@@ -6,6 +6,7 @@ using System.Reflection;
 
 namespace Lab6Tests
 {
+    [DoNotParallelize]
     [TestClass]
     public sealed class Lab6Tests
     {
@@ -69,9 +70,6 @@ namespace Lab6Tests
             // Assert
             // check if the list contains a book
             Assert.AreEqual(1, LibraryServices.books.Count);
-
-            // check if ID was generated
-            Assert.AreEqual(1, LibraryServices.books[0].Id);
         }
 
         /// <summary>

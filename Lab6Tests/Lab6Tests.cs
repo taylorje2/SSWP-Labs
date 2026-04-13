@@ -1,11 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Lab5.Services;
 using Lab5.Models;
+using System.Reflection;
 
 namespace Lab6Tests
 {
     [TestClass]
-    public sealed class Test1
+    public sealed class Lab6Tests
     {
         //////////////////////////////////////////////
         // Test methods for reading books and users
@@ -43,7 +44,7 @@ namespace Lab6Tests
         /// Test method for AddBook
         /// </summary>
         [DataTestMethod]
-        [DataRow("To Kill a Mockingbird", "Harper Lee", "123456-A")]
+        [DataRow("To Kill a Mockingbird", "Harper Lee", "123456-A")] // happy
         [DataRow("", "Harper Lee", "123456-A")]
         [DataRow("To Kill a Mockingbird", "", "123456-A")]
         [DataRow(null, null, "123456-A")]
@@ -55,13 +56,13 @@ namespace Lab6Tests
             LibraryServices.books.Clear();
 
             // new instance of LibraryServices
-            var testBook = new LibraryServices();
+            LibraryServices testBook = new LibraryServices();
 
             // new book instance
             var newBook = new Book { Title = title, Author = author, ISBN = isbn };
 
             // Act
-            // add the new book 
+            // add the new book using AddBook method
             testBook.AddBook(newBook);
 
             // Assert
@@ -76,7 +77,7 @@ namespace Lab6Tests
         /// Test method for AddUser
         /// </summary>
         [DataTestMethod]
-        [DataRow("John Smith", "example@email.com")]
+        [DataRow("John Smith", "example@email.com")] // happy
         [DataRow("John Smith", null)]
         [DataRow(null, "example@email.com")]
         [DataRow(null, null)]
@@ -87,13 +88,13 @@ namespace Lab6Tests
             LibraryServices.users.Clear();
 
             // new instance of LibraryServices
-            var testUser = new LibraryServices();
+            LibraryServices testUser = new LibraryServices();
 
             // new user instance
             var newUser = new User { Name = name, Email = email };
 
             // Act
-            // add the new user
+            // add the new user using AddUser method
             testUser.AddUser(newUser);
 
             // Assert
@@ -110,15 +111,20 @@ namespace Lab6Tests
         /// <summary>
         /// Test method for EditBook
         /// </summary>
-        [TestMethod]
-        public void TestEditBook()
+        [DataTestMethod]
+        [DataRow("To Kill a Mockingbird", "Harper Lee", "123456-A")]
+        [DataRow("", "Harper Lee", "123456-A")]
+        [DataRow("To Kill a Mockingbird", "", "123456-A")]
+        [DataRow(null, null, "123456-A")]
+        [DataRow(null, null, null)]
+        public void TestEditBook(int bookId, string newTitle, string newAuthor, string newISBN)
         {
             // Arrange
             // clear the book list for the test method
             LibraryServices.books.Clear();
 
             // new instance of LibraryServices
-            var testBook = new LibraryServices();
+            LibraryServices testBook = new LibraryServices();
 
             // fake book to update
             var existingBook = new Book { Title = "To Kill a Mockingbird", Author = "Harper Lee", ISBN = "123456-A" };
@@ -126,9 +132,22 @@ namespace Lab6Tests
             // add the fake book to the list
             testBook.AddBook(existingBook);
 
+            // update book set up
+            var updatedBook = new Book { Id = bookId, Title = newTitle, Author = newAuthor, ISBN = newISBN };
+
             // Act
+            // update the book that where ID = 1
+            testBook.EditBook(1, updatedBook);
 
             // Assert
+            // Assert that the new title was set
+            Assert.AreEqual(newTitle, LibraryServices.books[0].Title);
+
+            // Assert that the new author was set
+            Assert.AreEqual(newAuthor, LibraryServices.books[0].Author);
+
+            // Assert that the new ISBN was set
+            Assert.AreEqual(newISBN, LibraryServices.books[0].ISBN);
         }
 
         /// <summary>

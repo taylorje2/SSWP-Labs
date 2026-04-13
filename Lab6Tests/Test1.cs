@@ -114,6 +114,17 @@ namespace Lab6Tests
         public void TestEditBook()
         {
             // Arrange
+            // clear the book list for the test method
+            LibraryServices.books.Clear();
+
+            // new instance of LibraryServices
+            var testBook = new LibraryServices();
+
+            // fake book to update
+            var existingBook = new Book { Title = "To Kill a Mockingbird", Author = "Harper Lee", ISBN = "123456-A" };
+
+            // add the fake book to the list
+            testBook.AddBook(existingBook);
 
             // Act
 

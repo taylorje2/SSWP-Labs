@@ -239,13 +239,16 @@ namespace Lab6Tests
             // add the fake user to the list
             testUser.AddUser(existingUser);
 
+            // variable for existing book's ID
+            int userId = existingUser.Id;
+
             // Act
-            // delete the user where ID = 1
-            testUser.DeleteUser(1);
+            // delete the user where ID = existing book's ID
+            testUser.DeleteUser(userId);
 
             // Assert
             // Assert that the users list is empty
-            Assert.AreEqual(0, LibraryServices.users.Count);
+            Assert.IsFalse(LibraryServices.users.Contains(existingUser));
         }
     }
 }

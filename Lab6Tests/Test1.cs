@@ -7,6 +7,9 @@ namespace Lab6Tests
     [TestClass]
     public sealed class Test1
     {
+        //////////////////////////////////////////////
+        // Test methods for reading books and users
+        /////////////////////////////////////////////
         /// <summary>
         /// Test method for ReadBooks
         /// </summary>
@@ -33,17 +36,39 @@ namespace Lab6Tests
             // Assert
         }
 
+        ////////////////////////////////////////////////////
+        // Test methods for adding books and users
+        ///////////////////////////////////////////////////
         /// <summary>
         /// Test method for AddBook
         /// </summary>
-        [TestMethod]
-        public void TestAddBook()
+        [DataTestMethod]
+        [DataRow("To Kill a Mockingbird", "Harper Lee", "123456-A")]
+        [DataRow("", "Harper Lee", "123456-A")]
+        [DataRow("To Kill a Mockingbird", "", "123456-A")]
+        [DataRow(null, null, "123456-A")]
+        [DataRow(null, "Harper Lee", null)]
+        public void TestAddBook(string title, string author, string isbn)
         {
             // Arrange
+            // clear the book list for the test method
+            LibraryServices.books.Clear();
+
+            // new instance of LibraryServices
+            var testBook = new LibraryServices();
+
+            // new book instance
+            var newBook = new Book { Title = title, Author = author, ISBN = isbn };
 
             // Act
+            testBook.AddBook(newBook);
 
             // Assert
+            // check if the list contains a book
+            Assert.AreEqual(1, LibraryServices.books.Count);
+
+            // check if ID was generated
+            Assert.AreEqual(1, LibraryServices.books[0].Id);
         }
 
         /// <summary>
@@ -59,6 +84,9 @@ namespace Lab6Tests
             // Assert
         }
 
+        ////////////////////////////////////////////////
+        // Test methods for editing books and users
+        ///////////////////////////////////////////////
         /// <summary>
         /// Test method for EditBook
         /// </summary>
@@ -85,6 +113,9 @@ namespace Lab6Tests
             // Assert
         }
 
+        /////////////////////////////////////////////////////////////
+        // Test methods for deleting books and users
+        ////////////////////////////////////////////////////////////
         /// <summary>
         /// Test method for DeleteBook
         /// </summary>

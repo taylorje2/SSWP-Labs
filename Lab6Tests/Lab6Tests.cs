@@ -199,10 +199,24 @@ namespace Lab6Tests
         public void TestDeleteBook()
         {
             // Arrange
+            // clear the book list for the test method
+            LibraryServices.books.Clear();
+
+            // new instance of LibraryServices
+            LibraryServices testBook = new LibraryServices();
+
+            // fake book to delete
+            var existingBook = new Book { Title = "To Kill a Mockingbird", Author = "Harper Lee", ISBN = "123456-A" };
+
+            // add the fake book to the list
+            testBook.AddBook(existingBook);
 
             // Act
+            // delete book where ID = 1
+            testBook.DeleteBook(1);
 
             // Assert
+            Assert.AreEqual(0, LibraryServices.books.Count);
         }
 
         /// <summary>

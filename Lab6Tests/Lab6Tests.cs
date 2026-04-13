@@ -208,13 +208,16 @@ namespace Lab6Tests
             // add the fake book to the list
             testBook.AddBook(existingBook);
 
+            // variable to delete book with associated ID
+            int bookId = existingBook.Id;
+
             // Act
-            // delete book where ID = 1
-            testBook.DeleteBook(1);
+            // delete book where ID = existing book's ID
+            testBook.DeleteBook(bookId);
 
             // Assert
-            // assert that the books list is empty
-            Assert.AreEqual(0, LibraryServices.books.Count);
+            // assert that the books list does not contain the previously existing book
+            Assert.IsFalse(LibraryServices.books.Contains(existingBook));
         }
 
         /// <summary>

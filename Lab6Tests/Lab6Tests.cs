@@ -69,7 +69,7 @@ namespace Lab6Tests
 
             // Assert
             // check if the list contains the books
-            Assert.IsTrue(LibraryServices.books.Count > 0);
+            Assert.IsTrue(LibraryServices.books.Contains(newBook));
         }
 
         /// <summary>
@@ -98,7 +98,9 @@ namespace Lab6Tests
 
             // Assert
             // check if users were added to list
-            Assert.IsTrue(LibraryServices.users.Count > 0);
+            Assert.IsTrue(LibraryServices.users.Contains(newUser));
+
+
         }
 
         ////////////////////////////////////////////////

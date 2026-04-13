@@ -61,6 +61,7 @@ namespace Lab6Tests
             var newBook = new Book { Title = title, Author = author, ISBN = isbn };
 
             // Act
+            // add the new book 
             testBook.AddBook(newBook);
 
             // Assert
@@ -74,14 +75,33 @@ namespace Lab6Tests
         /// <summary>
         /// Test method for AddUser
         /// </summary>
-        [TestMethod]
-        public void TestAddUser()
+        [DataTestMethod]
+        [DataRow("John Smith", "example@email.com")]
+        [DataRow("John Smith", null)]
+        [DataRow(null, "example@email.com")]
+        [DataRow(null, null)]
+        public void TestAddUser(string name, string email)
         {
             // Arrange
+            // clear the user list for the test method
+            LibraryServices.users.Clear();
+
+            // new instance of LibraryServices
+            var testUser = new LibraryServices();
+
+            // new user instance
+            var newUser = new User { Name = name, Email = email };
 
             // Act
+            // add the new user
+            testUser.AddUser(newUser);
 
             // Assert
+            // check if list contains a user
+            Assert.AreEqual(1, LibraryServices.users.Count);
+
+            // check if ID was generated for new user
+            Assert.AreEqual(1, LibraryServices.users[0].Id);
         }
 
         ////////////////////////////////////////////////

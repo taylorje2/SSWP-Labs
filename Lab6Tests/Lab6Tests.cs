@@ -216,6 +216,7 @@ namespace Lab6Tests
             testBook.DeleteBook(1);
 
             // Assert
+            // assert that the books list is empty
             Assert.AreEqual(0, LibraryServices.books.Count);
         }
 
@@ -226,10 +227,25 @@ namespace Lab6Tests
         public void TestDeleteUser()
         {
             // Arrange
+            // clear the user list for the test method
+            LibraryServices.users.Clear();
+
+            // new instance of LibraryServices
+            LibraryServices testUser = new LibraryServices();
+
+            // fake user to delete
+            var existingUser = new User { Name = "John Smith", Email = "example@email.com" };
+
+            // add the fake user to the list
+            testUser.AddUser(existingUser);
 
             // Act
+            // delete the user where ID = 1
+            testUser.DeleteUser(1);
 
             // Assert
+            // Assert that the users list is empty
+            Assert.AreEqual(0, LibraryServices.users.Count);
         }
     }
 }

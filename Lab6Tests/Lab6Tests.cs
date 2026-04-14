@@ -148,22 +148,40 @@ namespace Lab6Tests
             // add the fake book to the list
             testBook.AddBook(existingBook);
 
-            // update book set up
+            // updated book instance
             var updatedBook = new Book { Title = newTitle, Author = newAuthor, ISBN = newISBN };
 
             // Act
-            // update the book that where ID = 1
-            testBook.EditBook(1, updatedBook);
+            // update the existing book
+            testBook.EditBook(existingBook.Id, updatedBook);
 
             // Assert
-            // Assert that the new title was set
-            Assert.AreEqual(newTitle, LibraryServices.books[0].Title);
+            if (!string.IsNullOrEmpty(newISBN))
+            {
+                Assert.IsTrue(existingBook.ISBN == newISBN);
+            }
+            else
+            {
+                Assert.IsFalse(existingBook.ISBN == newISBN);
+            }
 
-            // Assert that the new author was set
-            Assert.AreEqual(newAuthor, LibraryServices.books[0].Author);
+            if (!string.IsNullOrEmpty(newTitle))
+            {
+                Assert.IsTrue(existingBook.Title == newTitle);
+            }
+            else
+            {
+                Assert.IsFalse(existingBook.Title == newTitle);
+            }
 
-            // Assert that the new ISBN was set
-            Assert.AreEqual(newISBN, LibraryServices.books[0].ISBN);
+            if (!string.IsNullOrEmpty(newAuthor))
+            {
+                Assert.IsTrue(existingBook.Author == newAuthor);
+            }
+            else
+            {
+                Assert.IsFalse(existingBook.Author == newAuthor);
+            }
         }
 
         /// <summary>

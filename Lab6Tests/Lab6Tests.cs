@@ -215,14 +215,28 @@ namespace Lab6Tests
 
             // Act
             // update the user that where ID = 1
-            testUser.EditUser(1, updatedUser);
+            testUser.EditUser(existingUser.Id, updatedUser);
 
             // Assert
-            // Assert that the new name was set
-            Assert.AreEqual(newName, LibraryServices.users[0].Name);
+            // confirm if name has changed or not
+            if (!string.IsNullOrEmpty(newName))
+            {
+                Assert.IsTrue(existingUser.Name == newName);
+            }
+            else
+            {
+                Assert.IsFalse(existingUser.Name == newName);
+            }
 
-            // Assert that the new author was set
-            Assert.AreEqual(newEmail, LibraryServices.users[0].Name);
+            // confirm if email has changed or not
+            if (!string.IsNullOrEmpty(newEmail))
+            {
+                Assert.IsTrue(existingUser.Email == newEmail);
+            }
+            else
+            {
+                Assert.IsFalse(existingUser.Email == newEmail);
+            }
         }
 
         /////////////////////////////////////////////////////////////

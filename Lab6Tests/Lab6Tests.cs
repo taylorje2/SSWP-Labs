@@ -20,10 +20,19 @@ namespace Lab6Tests
         public void TestReadBooks()
         {
             // Arrange
+            // clear the books list ahead of time
+            LibraryServices.books.Clear();
+
+            // instance of LibraryServices
+            LibraryServices testBook = new LibraryServices();
 
             // Act
+            // run method
+            testBook.ReadBooks();
 
             // Assert
+            // Assert that books list contains data
+            Assert.IsTrue(LibraryServices.books.Count > 0);
         }
 
         /// <summary>

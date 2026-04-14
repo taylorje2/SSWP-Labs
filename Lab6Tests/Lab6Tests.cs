@@ -156,6 +156,7 @@ namespace Lab6Tests
             testBook.EditBook(existingBook.Id, updatedBook);
 
             // Assert
+            // confirm if ISBN has changed or not
             if (!string.IsNullOrEmpty(newISBN))
             {
                 Assert.IsTrue(existingBook.ISBN == newISBN);
@@ -165,6 +166,7 @@ namespace Lab6Tests
                 Assert.IsFalse(existingBook.ISBN == newISBN);
             }
 
+            // confirm if Title has changed or not
             if (!string.IsNullOrEmpty(newTitle))
             {
                 Assert.IsTrue(existingBook.Title == newTitle);
@@ -174,6 +176,7 @@ namespace Lab6Tests
                 Assert.IsFalse(existingBook.Title == newTitle);
             }
 
+            // confirm if Author has changed or not
             if (!string.IsNullOrEmpty(newAuthor))
             {
                 Assert.IsTrue(existingBook.Author == newAuthor);

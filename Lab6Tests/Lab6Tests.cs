@@ -42,10 +42,19 @@ namespace Lab6Tests
         public void TestReadUsers()
         {
             // Arrange
+            // clear the users list
+            LibraryServices.users.Clear();
+
+            // instance of LibraryServices
+            LibraryServices testUser = new LibraryServices();
 
             // Act
+            // run method
+            testUser.ReadUsers();
 
             // Assert
+            // Assert that users list contains data
+            Assert.IsTrue(LibraryServices.users.Count > 0);
         }
 
         ////////////////////////////////////////////////////

@@ -10,7 +10,7 @@ namespace Lab5.Services
         /// <summary>
         /// books and users lists
         /// </summary>
-        public static List<Book> books { get; set; } = new List<Book>();
+        public static List<Book> books { get; set; } = new List<Book>()
         public static List<User> users { get; set; } = new List<User>();
 
         /// <summary>

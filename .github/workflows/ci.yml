@@ -27,6 +27,9 @@ jobs:
     name: build-and-test-${{matrix.os}}
 
     runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: /Lab5/Lab5.sln
 
     strategy:
 

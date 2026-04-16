@@ -67,3 +67,4 @@ jobs:
     - name: Test
 
       run: dotnet test ./Lab6Tests --no-restore --verbosity normal
+

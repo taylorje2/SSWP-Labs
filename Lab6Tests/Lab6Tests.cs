@@ -24,7 +24,7 @@ namespace Lab6Tests
             LibraryServices.books.Clear();
 
             // instance of LibraryServices
-            LibraryServices testBook = new LibraryServices()
+            LibraryServices testBook = new LibraryServices();
 
             // Act
             // run method

@@ -54,13 +54,13 @@ jobs:
 
     - name: Install dependencies
 
-      run: dotnet restore
+      run: dotnet restore ./Lab5/Lab5.sln
 
      
 
     - name: Build
 
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet build ./Lab5/Lab5.sln --configuration Release --no-restore
 
    
 
